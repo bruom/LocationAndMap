@@ -15,7 +15,13 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapa;
 @property (retain) CLLocationManager *locationManager;
 @property NSArray *location;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *mapTap;
+@property CLLocationCoordinate2D coordToque;
 
 - (IBAction)atualizar:(id)sender;
+
+- (IBAction)marcar:(id)sender;
+
+- (void)tocarLocal:(UITapGestureRecognizer *)gestureRecognizer;
 
 @end

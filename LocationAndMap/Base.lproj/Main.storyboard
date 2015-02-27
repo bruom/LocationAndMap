@@ -18,9 +18,13 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="jWs-fc-1De">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <gestureRecognizers/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="0.0" y="0.0" width="400" height="550"/>
                                 </variation>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="K7G-Bh-rur" appends="YES" id="qqc-ag-DvJ"/>
+                                </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TyQ-PG-HPq">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -28,10 +32,22 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="177" y="562" width="60" height="30"/>
+                                    <rect key="frame" x="66" y="558" width="60" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="atualizar:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="3LO-2S-oXU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZZ-4w-ldq">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Marcar local atual">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="205" y="558" width="122" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="marcar:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="zEe-Vx-dsh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -40,20 +56,24 @@
                             <mask key="subviews">
                                 <exclude reference="jWs-fc-1De"/>
                                 <exclude reference="TyQ-PG-HPq"/>
+                                <exclude reference="fZZ-4w-ldq"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="jWs-fc-1De"/>
                                 <include reference="TyQ-PG-HPq"/>
+                                <include reference="fZZ-4w-ldq"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="mapTap" destination="K7G-Bh-rur" id="dbN-cc-cGL"/>
                         <outlet property="mapa" destination="jWs-fc-1De" id="zNo-nD-Gi9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="K7G-Bh-rur"/>
             </objects>
             <point key="canvasLocation" x="379.5" y="308"/>
         </scene>

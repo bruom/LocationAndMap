@@ -14,9 +14,9 @@
 
 @implementation MapViewController
 @synthesize mapa;
-@synthesize  locationManager;
-
-
+@synthesize locationManager;
+@synthesize mapTap;
+@synthesize coordToque;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,6 +30,9 @@
         [locationManager requestWhenInUseAuthorization];
     }
     mapa.mapType = MKMapTypeSatellite;
+    
+    mapTap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tocarLocal:)];
+    [self.mapa addGestureRecognizer:mapTap];
     
     mapa.showsUserLocation = YES;
     [locationManager startUpdatingLocation];
@@ -68,8 +71,39 @@
     [mapa setRegion:region animated:YES];
 }
 
+- (IBAction)marcar:(id)sender {
+    //Instanciar o MKPointAnnotation
+    MKPointAnnotation *pm = [[MKPointAnnotation alloc]init];
+    
+    //Determinar a localização do MKPointAnnotation
+    pm.coordinate = [[_location lastObject]coordinate];
+    
+    //Adicionar pm ao mapa
+    [mapa addAnnotation:pm];
+    
+}
+
 -(void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     NSLog(@"Failure updating location.");
 }
+
+- (void)tocarLocal:(UITapGestureRecognizer *)gestureRecognizer{
+    
+    CGPoint touchPoint = [gestureRecognizer locationInView:self.mapa];
+    CLLocationCoordinate2D toque =
+    [self.mapa convertPoint:touchPoint toCoordinateFromView:self.mapa];
+    
+    coordToque = toque;
+    
+    NSLog(@"Location found from Map: %f %f",toque.latitude,toque.longitude);
+    
+    MKPointAnnotation *pm = [[MKPointAnnotation alloc]init];
+    
+    pm.coordinate = coordToque;
+    
+    [mapa addAnnotation:pm];
+    
+}
+
 
 @end
