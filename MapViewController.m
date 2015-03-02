@@ -20,6 +20,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [mapa setDelegate:self];
+    
+    _pontosRota = [[NSMutableArray alloc]init];
+    
     locationManager = [[CLLocationManager alloc]init];
     
     [locationManager setDesiredAccuracy:kCLLocationAccuracyNearestTenMeters];
@@ -59,16 +64,20 @@
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     _location = locations;
     
-//    CLLocationCoordinate2D location = [[locations lastObject]coordinate];
-//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 500, 500);
+    CLLocationCoordinate2D location = [[locations lastObject]coordinate];
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 500, 500);
     
-    //[mapa setRegion:region animated:YES];
+    [mapa setRegion:region animated:YES];
+    [_pontosRota addObject:[_location lastObject]];
+    [self drawRoute:_pontosRota];
 }
 
 -(IBAction)atualizar:(id)sender{
-    CLLocationCoordinate2D location = [[_location lastObject]coordinate];
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 500, 500);
-    [mapa setRegion:region animated:YES];
+//    CLLocationCoordinate2D location = [[_location lastObject]coordinate];
+//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location, 500, 500);
+//    [mapa setRegion:region animated:YES];
+    
+    [self drawRoute:_pontosRota];
 }
 
 - (IBAction)marcar:(id)sender {
@@ -80,8 +89,8 @@
     
     //Adicionar pm ao mapa
     [mapa addAnnotation:pm];
-    
 }
+
 
 -(void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     NSLog(@"Failure updating location.");
@@ -104,6 +113,50 @@
     [mapa addAnnotation:pm];
     
 }
+
+
+#pragma mark - PolyLine
+
+
+-(void)drawRoute:(NSMutableArray*)pontos{
+    
+    
+    //para evitar de criar infinitas linhas e sobrecarregar a memoria
+    if(nil!=_antigaLinha){
+        [mapa removeOverlay:_antigaLinha];
+    }
+    CLLocationCoordinate2D coordenadas[pontos.count];
+    for(int i=0; i< pontos.count; i++){
+        CLLocation *local = [pontos objectAtIndex:i];
+        CLLocationCoordinate2D coordenada = local.coordinate;
+        
+        coordenadas[i] = coordenada;
+    }
+    MKPolyline *polyline = [MKPolyline polylineWithCoordinates:coordenadas count:pontos.count];
+    _antigaLinha = polyline;
+    [mapa addOverlay:polyline];
+}
+
+#pragma mark - MKMapViewDelegate
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MKPolyline class]])
+    {
+        MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
+        
+        
+        //É ESSE QUE DEFINE A COR
+        renderer.strokeColor = [[UIColor greenColor] colorWithAlphaComponent:0.7];
+        renderer.lineWidth   = 3;
+        
+        return renderer;
+    }
+    
+    return nil;
+}
+
+
 
 
 @end

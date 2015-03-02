@@ -10,13 +10,15 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface MapViewController : UIViewController <CLLocationManagerDelegate>
+@interface MapViewController : UIViewController <CLLocationManagerDelegate,MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapa;
 @property (retain) CLLocationManager *locationManager;
 @property NSArray *location;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *mapTap;
 @property CLLocationCoordinate2D coordToque;
+@property NSMutableArray *pontosRota;
+@property MKPolyline *antigaLinha;
 
 - (IBAction)atualizar:(id)sender;
 
