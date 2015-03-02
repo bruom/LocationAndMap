@@ -44,10 +44,22 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="205" y="558" width="122" height="30"/>
+                                    <rect key="frame" x="271" y="558" width="122" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="marcar:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="zEe-Vx-dsh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ihf-IC-5q0">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Fim Sessao">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="172" y="558" width="80" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="fimSessao:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="2zb-hO-VyW"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -57,6 +69,7 @@
                                 <exclude reference="jWs-fc-1De"/>
                                 <exclude reference="TyQ-PG-HPq"/>
                                 <exclude reference="fZZ-4w-ldq"/>
+                                <exclude reference="ihf-IC-5q0"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -64,6 +77,7 @@
                                 <include reference="jWs-fc-1De"/>
                                 <include reference="TyQ-PG-HPq"/>
                                 <include reference="fZZ-4w-ldq"/>
+                                <include reference="ihf-IC-5q0"/>
                             </mask>
                         </variation>
                     </view>

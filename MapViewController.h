@@ -19,11 +19,15 @@
 @property CLLocationCoordinate2D coordToque;
 @property NSMutableArray *pontosRota;
 @property MKPolyline *antigaLinha;
+@property NSDate *inicioData;
+@property NSDate *fimData;
 
 - (IBAction)atualizar:(id)sender;
 
 - (IBAction)marcar:(id)sender;
 
 - (void)tocarLocal:(UITapGestureRecognizer *)gestureRecognizer;
+
+- (IBAction)fimSessao:(id)sender;
 
 @end

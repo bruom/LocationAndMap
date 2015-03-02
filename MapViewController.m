@@ -21,9 +21,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    //IMPORTANTE
     [mapa setDelegate:self];
     
     _pontosRota = [[NSMutableArray alloc]init];
+    
+    _inicioData = [NSDate date];
     
     locationManager = [[CLLocationManager alloc]init];
     
@@ -70,6 +74,7 @@
     [mapa setRegion:region animated:YES];
     [_pontosRota addObject:[_location lastObject]];
     [self drawRoute:_pontosRota];
+    
 }
 
 -(IBAction)atualizar:(id)sender{
@@ -115,6 +120,32 @@
 }
 
 
+
+#pragma mark - Features do App RunRoute
+
+//encerra sessão e calcula meta-dados desta
+- (IBAction)fimSessao:(id)sender {
+    [locationManager stopUpdatingLocation];
+    NSArray *sessao = _pontosRota;
+    _fimData = [NSDate date];
+    NSTimeInterval aux = [_fimData timeIntervalSinceDate:_inicioData];
+    NSLog(@"%i minutos e %i segundos.", (int)aux/60, (int)aux%60) ;
+    NSLog(@"Distancia: %f metros.", [self calculaDistancia:sessao]);
+}
+
+//calcula distancia total da rota
+-(float)calculaDistancia:(NSArray*)pontos{
+    if(nil==pontos || pontos.count == 0){
+        return 0.0;
+    }
+    float distancia = 0.0;
+    for(int i=1;i<pontos.count-1;i++){
+        distancia += (float)[[pontos objectAtIndex:i]  distanceFromLocation:[pontos objectAtIndex:i+1]];
+    }
+    return distancia;
+}
+
+
 #pragma mark - PolyLine
 
 
@@ -148,7 +179,7 @@
         
         //É ESSE QUE DEFINE A COR
         renderer.strokeColor = [[UIColor greenColor] colorWithAlphaComponent:0.7];
-        renderer.lineWidth   = 3;
+        renderer.lineWidth   = 5;
         
         return renderer;
     }
